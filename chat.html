@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Web</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000; /* Fond noir */
+      color: #0f0; /* Texte vert */
+      overflow: hidden; /* Pour empêcher le défilement */
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #000; /* Fond noir */
+      color: #0f0; /* Texte vert */
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Ombre verte */
+    }
+
+    header h1 {
+      text-align: center;
+    }
+
+    .welcome-text {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #chat-box {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #0f0; /* Bordure verte */
+      padding: 10px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .message strong {
+      color: #0f0; /* Vert */
+    }
+
+    input[type="text"] {
+      width: calc(100% - 70px);
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #000; /* Fond noir */
+      color: #0f0; /* Texte vert */
+      border: 1px solid #0f0; /* Bordure verte */
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0f0; /* Vert */
+      color: #000; /* Texte noir */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #008000; /* Vert foncé au survol */
+    }
+
+    .riddler {
+      font-family: "Courier New", Courier, monospace;
+      color: #0f0; /* Vert */
+    }
+
+    .bottom-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .bottom-buttons button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50; /* Vert */
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .bottom-buttons button:hover {
+      background-color: #45a049; /* Vert plus foncé au survol */
+    }
+
+    /* Animation de la pluie de lignes de chiffres */
+    @keyframes rain {
+      from {
+        transform: translateY(-200px);
+      }
+      to {
+        transform: translateY(calc(100vh + 200px));
+      }
+    }
+
+    .rain-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Pour ignorer les événements de la souris */
+      z-index: -1; /* Pour placer en arrière-plan */
+    }
+
+    .raindrop {
+      position: absolute;
+      width: 1px;
+      height: 200px;
+      background-color: #0f0; /* Vert */
+      opacity: 0.6; /* Opacité */
+      animation: rain 10s linear infinite; /* Animation */
+    }
+
+    .raindrop:nth-child(2n) {
+      height: 250px;
+      animation-duration: 8s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(3n) {
+      height: 300px;
+      animation-duration: 12s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(4n) {
+      height: 350px;
+      animation-duration: 9s;
+    }
+
+    .raindrop:nth-child(5n) {
+      height: 400px;
+      animation-duration: 11s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(6n) {
+      height: 450px;
+      animation-duration: 10s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(7n) {
+      height: 500px;
+      animation-duration: 13s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(8n) {
+      height: 550px;
+      animation-duration: 14s; /* Durée de l'animation */
+    }
+
+    .raindrop:nth-child(9n) {
+      height: 600px;
+      animation-duration: 15s; /* Durée de l'animation */
+    }
+
+    /* Style pour la div de la pluie de chiffres à gauche */
+    .rain-container.left {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      pointer-events: none; /* Pour ignorer les événements de la souris */
+      z-index: -1; /* Pour placer en arrière-plan */
+    }
+
+    /* Style pour la div de la pluie de chiffres à droite */
+    .rain-container.right {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      pointer-events: none; /* Pour ignorer les événements de la souris */
+      z-index: -1; /* Pour placer en arrière-plan */
+    }
+  </style>
+</head>
+<body>
+  <div class="rain-container left">
+    <!-- Div pour la pluie de chiffres à gauche -->
+    <div class="raindrop"></div>
+    <!-- Ajoutez d'autres gouttes de pluie si nécessaire -->
+  </div>
+
+  <div class="chat-container">
+    <header>
+      <div class="welcome-text">Welcome to the Chat</div>
+    </header>
+    <div id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <div class="rain-container right">
+    <!-- Div pour la pluie de chiffres à droite -->
+    <div class="raindrop"></div>
+    <!-- Ajoutez d'autres gouttes de pluie si nécessaire -->
+  </div>
+
+  <div class="bottom-buttons">
+    <button onclick="login()">Login</button>
+    <button onclick="changeUsername()">Change my Username</button>
+  </div>
+
+  <script>
+    const users = ['Riddler'];
+    let currentUser = '';
+
+    function login() {
+      const username = prompt("Enter your username:");
+      const password = prompt("Enter your password:");
+
+      // Exemple de vérification de l'utilisateur avec une liste prédéfinie
+      if (users.includes(username) && password === '1234') {
+        currentUser = username;
+        document.querySelector('.welcome-text').innerText = `Welcome to the Chat, ${currentUser}!`;
+        if (currentUser === 'Riddler') {
+          document.body.classList.add('riddler');
+        }
+      } else {
+        alert("Incorrect username or password.");
+      }
+    }
+
+    function changeUsername() {
+      if (currentUser !== 'Riddler') {
+        const newUsername = prompt("Enter your new username:");
+        if (newUsername && newUsername !== '') {
+          if (users.includes(newUsername)) {
+            alert("Username already exists. Please choose another one.");
+          } else {
+            currentUser = newUsername;
+            document.querySelector('.welcome-text').innerText = `Welcome to the Chat, ${currentUser}!`;
+          }
+        }
+      } else {
+        alert("You cannot change the username as Riddler.");
+      }
+    }
+
+    function sendMessage() {
+      const message = document.getElementById('user-input').value;
+      if (message.trim() !== '') {
+        const formattedMessage = `<div class="message"><strong>${currentUser}:</strong> ${message}</div>`;
+        document.getElementById('chat-box').innerHTML += formattedMessage;
+        document.getElementById('user-input').value = '';
+      }
+    }
+  </script>
+</body>
+</html>

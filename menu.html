@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: green;
+            font-family: 'Courier New', Courier, monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Remplacez 'background.jpg' par votre image de fond hacker */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .logo img {
+            max-width: 300px; /* Ajustez selon la taille de votre logo */
+            max-height: 300px; /* Ajustez selon la taille de votre logo */
+            animation: pulse 2s infinite alternate;
+        }
+
+        .enter-button {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: green;
+            border: 2px solid green;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+            outline: none;
+        }
+
+        .enter-button:hover {
+            color: black;
+            border-color: black;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6c17a15b-6650-4f05-b9cd-5c7d47f3945c/df1xopt-5573817e-cb77-4dcc-a5cb-4c4725453a32.png/v1/fill/w_768,h_768/the_riddler_symbol___the_batman_2022_version___by_superg_bot_df1xopt-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY4IiwicGF0aCI6IlwvZlwvNmMxN2ExNWItNjY1MC00ZjA1LWI5Y2QtNWM3ZDQ3ZjM5NDVjXC9kZjF4b3B0LTU1NzM4MTdlLWNiNzctNGRjYy1hNWNiLTRjNDcyNTQ1M2EzMi5wbmciLCJ3aWR0aCI6Ijw9NzY4In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.6xje67kKXwbzHJfvmhUVeVE5hly8ZkcvANxWlgnavIw" alt="Logo">
+        </div>
+        <button class="enter-button" onclick="redirectToNewPage()">Entrer</button>
+    </div>
+
+    <!-- Ajoutez l'élément audio pour la musique de fond -->
+    <audio autoplay loop>
+        <source src="Music1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function redirectToNewPage() {
+            window.location.href = "animation.html"; // Remplacez "animation.html" par le nom de votre nouvelle page HTML
+        }
+    </script>
+</body>
+</html>
