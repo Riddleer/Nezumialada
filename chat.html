@@ -216,50 +216,29 @@
     <button onclick="changeUsername()">Change my Username</button>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
   <script>
-    const users = ['Riddler'];
-    let currentUser = '';
+    const socket = io(); // Connexion au serveur Socket.IO
 
-    function login() {
-      const username = prompt("Enter your username:");
-      const password = prompt("Enter your password:");
-
-      // Exemple de vérification de l'utilisateur avec une liste prédéfinie
-      if (users.includes(username) && password === '1234') {
-        currentUser = username;
-        document.querySelector('.welcome-text').innerText = `Welcome to the Chat, ${currentUser}!`;
-        if (currentUser === 'Riddler') {
-          document.body.classList.add('riddler');
-        }
-      } else {
-        alert("Incorrect username or password.");
-      }
-    }
-
-    function changeUsername() {
-      if (currentUser !== 'Riddler') {
-        const newUsername = prompt("Enter your new username:");
-        if (newUsername && newUsername !== '') {
-          if (users.includes(newUsername)) {
-            alert("Username already exists. Please choose another one.");
-          } else {
-            currentUser = newUsername;
-            document.querySelector('.welcome-text').innerText = `Welcome to the Chat, ${currentUser}!`;
-          }
-        }
-      } else {
-        alert("You cannot change the username as Riddler.");
-      }
-    }
-
+    // Fonction pour envoyer un message
     function sendMessage() {
       const message = document.getElementById('user-input').value;
       if (message.trim() !== '') {
         const formattedMessage = `<div class="message"><strong>${currentUser}:</strong> ${message}</div>`;
         document.getElementById('chat-box').innerHTML += formattedMessage;
+        socket.emit('chatMessage', message); // Envoyer le message au serveur
         document.getElementById('user-input').value = '';
       }
     }
+
+    // Fonction pour gérer l'arrivée d'un nouveau message
+    socket.on('message', (message) => {
+      const formattedMessage = `<div class="message">${message}</div>`;
+      document.getElementById('chat-box').innerHTML += formattedMessage;
+<!-- Ajoutez ceci dans votre fichier HTML -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+
+    });
   </script>
 </body>
 </html>
